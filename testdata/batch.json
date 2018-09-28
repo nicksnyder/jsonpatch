@@ -1,0 +1,10 @@
+[
+  {
+    "glob": "document1*",
+    "jsonPatch": [{ "op": "add", "path": "/c", "value": 3 }]
+  },
+  {
+    "glob": "document2*",
+    "jsonPatch": [{ "op": "add", "path": "/d", "value": 4 }]
+  }
+]
