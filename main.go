@@ -1,3 +1,24 @@
+// Command jsonpatch applies RFC 6902 JSON Patches to JSON or YAML documents.
+//
+// If at least one document is provided, the patch file is parsed as a RFC 6902 JSON Patch.
+//
+// If no documents are provided, the patch file is parsed as a batch patch file:
+//
+//	[
+//		{
+//			"glob": "*.json"
+//			"jsonPatch": [
+//				{ "op": "add", "path": "/a", "value": 1 }
+//			]
+//		},
+//		{
+//			"glob": "*.yaml"
+//			"jsonPatch": [
+//				{ "op": "test", "path": "/b", "value": 1 },
+//				{ "op": "remove", "path": "/b" }
+//			]
+//		}
+//	]
 package main
 
 import (
@@ -136,7 +157,7 @@ func applyJSONPatch(patchJSON []byte, documentPaths []string, outdir string) err
 			return err
 		}
 
-		patchedDoc, err := patch.Apply(doc)
+		patchedDoc, err := patch.ApplyIndent(doc, "  ")
 		if err != nil {
 			return errors.Wrapf(err, "error applying JSON Patch %s to %s", patchJSON, docPath)
 		}
